@@ -3,9 +3,12 @@ import datasource
 import multiprocessing
 import threading
 
+server_host = "192.168.0.103"
+server_port = 5000
+
 def start_client():
     print("start client")
-    c = FederatedClient("127.0.0.1", 5000, datasource.Mnist)
+    c = FederatedClient(server_host, server_port, datasource.Mnist)
 
 
 if __name__ == '__main__':

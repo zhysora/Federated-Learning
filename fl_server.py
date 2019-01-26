@@ -248,7 +248,7 @@ class FLServer(object):  # 服务端
 
                     # 如果前一轮的train_loss和现在的train_loss变化小于1% 判断为收敛 停止训练并开始评估
                     if self.global_model.prev_train_loss is not None and \
-                            (self.global_model.prev_train_loss - aggr_train_loss) / self.global_model.prev_train_loss < .01:
+                            (self.global_model.prev_train_loss - aggr_train_loss) / self.global_model.prev_train_loss < .001:
                         # converges 收敛
                         print("converges! starting test phase..")
                         self.stop_and_eval() # 服务端结束 并向客户端发出 eval请求 开始测试集上的表现计算
@@ -307,6 +307,7 @@ class FLServer(object):  # 服务端
 
     
     def stop_and_eval(self): # 训练结束 进行测试集上的表现
+        self.current_round = 999
         self.eval_client_updates = [] # 清空
         for rid in self.ready_client_sids: # 向就绪队列中的客户端 发送 eval请求
             emit('stop_and_eval', {
@@ -321,11 +322,15 @@ class FLServer(object):  # 服务端
 
 
 def obj_to_pickle_string(x): # 将对象 用 pickle 保存
+    # return x
+    # return pickle.dumps(x)
     return codecs.encode(pickle.dumps(x), "base64").decode()
     # return msgpack.packb(x, default=msgpack_numpy.encode)
     # TODO: compare pickle vs msgpack vs json for serialization; tradeoff: computation vs network IO
  
 def pickle_string_to_obj(s): # 从pickle中 加载 对象
+    # return s
+    # return pickle.loads(s)
     return pickle.loads(codecs.decode(s.encode(), "base64"))
     # return msgpack.unpackb(s, object_hook=msgpack_numpy.decode)
 
@@ -335,6 +340,9 @@ if __name__ == '__main__':
     # and configured properly inside socketio.run(). In production mode the eventlet web server
     # is used if available, else the gevent web server is used.
     
-    server = FLServer(GlobalModel_MNIST_CNN, "127.0.0.1", 5000) # 服务端
-    print("listening on 127.0.0.1:5000");
+    server_host = "192.168.0.103"
+    server_port = 5000
+
+    server = FLServer(GlobalModel_MNIST_CNN, server_host, server_port) # 服务端
+    print("listening on %s:%d"%(server_host, server_port))
     server.start()
