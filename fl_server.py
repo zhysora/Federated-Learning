@@ -121,9 +121,9 @@ class GlobalModel_MNIST_CNN(GlobalModel): # 继承至全局模型 实现 MNIST�
 
 class FLServer(object):  # 服务端
     
-    MIN_NUM_WORKERS = 5 # 最少工人数
+    MIN_NUM_WORKERS = 1 # 最少工人数
     MAX_NUM_ROUNDS = 50 # 最大训练轮数
-    NUM_CLIENTS_CONTACTED_PER_ROUND = 5 # 每轮连接的客户端 数
+    NUM_CLIENTS_CONTACTED_PER_ROUND = 1 # 每轮连接的客户端 数
     ROUNDS_BETWEEN_VALIDATIONS = 2 # 验证的间隔论述
 
     def __init__(self, global_model, host, port): # 初始化
@@ -196,6 +196,8 @@ class FLServer(object):  # 服务端
             # 如果就绪队列中的客户端数量 >= 服务端要求的最小值 而且服务端还处于未开始训练的状态
             if len(self.ready_client_sids) >= FLServer.MIN_NUM_WORKERS and self.current_round == -1: # 开始第一轮
                 self.train_next_round()
+                self.begin_time = int(round(time.time()))
+                print("begin_time(s):", self.begin_time())
 
         @self.socketio.on('client_update') # 收到 client_update
         def handle_client_update(data):
@@ -279,6 +281,9 @@ class FLServer(object):  # 服务端
                 );
                 print("\naggr_test_loss", aggr_test_loss) # 输出测试集上的表现
                 print("aggr_test_accuracy", aggr_test_accuracy)
+                self.end_time = int(round(time.time()))
+                print("end_time(s):", self.end_time)
+                print("total_time(s):", self.end_time - self.begin_time)
                 print("== done ==")
                 self.eval_client_updates = None  # special value, forbid evaling again
 
