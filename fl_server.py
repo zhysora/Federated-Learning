@@ -197,7 +197,7 @@ class FLServer(object):  # 服务端
             if len(self.ready_client_sids) >= FLServer.MIN_NUM_WORKERS and self.current_round == -1: # 开始第一轮
                 self.train_next_round()
                 self.begin_time = int(round(time.time()))
-                print("begin_time(s):", self.begin_time())
+                print("begin_time(s):", self.begin_time)
 
         @self.socketio.on('client_update') # 收到 client_update
         def handle_client_update(data):
