@@ -38,10 +38,6 @@ class LocalModel(object): # 局部模型
         self.x_valid = np.array([tup[0] for tup in valid_data])
         self.y_valid = np.array([tup[1] for tup in valid_data]).reshape((-1, 10))
 
-        print('y_train:', self.y_train.shape)
-        print('y_valid:', self.y_valid.shape)
-        print('y_test:', self.y_test.shape)
-
     def get_weights(self): # 返回模型权重
         return self.model.get_weights()
 
@@ -57,8 +53,7 @@ class LocalModel(object): # 局部模型
         self.model.fit(self.x_train, self.y_train,
                   epochs=self.model_config['epoch_per_round'],
                   batch_size=self.model_config['batch_size'],
-                  verbose=1,
-                  validation_data=(self.x_valid, self.y_valid)) # 训练一轮
+                  verbose=1) # 训练一轮
 
         score = self.model.evaluate(self.x_train, self.y_train, verbose=0) # 获取评估值
         print('Train loss:', score[0]) # 打印 评估值
@@ -83,6 +78,10 @@ class LocalModel(object): # 局部模型
 # it contributes to the global model by sending its local gradients.
 
 class FederatedClient(object):
+    ##### Client Config
+    DATA_MODE = True # true 代表 Non-IDD, false 代表 IDD
+    SLEEP_MODE = False # true 代表会随机sleep, false 代表不会
+
     MAX_DATASET_SIZE_KEPT = 1200 # 最大数据集上限
 
     def __init__(self, server_host, server_port, datasource):
@@ -102,12 +101,21 @@ class FederatedClient(object):
         print('on init', model_config)
         print('preparing local data based on server model_config')
         # ([(Xi, Yi)], [], []) = train, test, valid
-        fake_data, my_class_distr = self.datasource.fake_non_iid_data( # 从数据中心 获取 分配到的数据
-            min_train=model_config['min_train_size'],
-            max_train=FederatedClient.MAX_DATASET_SIZE_KEPT,
-            data_split=model_config['data_split']
-        )
-        self.local_model = LocalModel(model_config, fake_data) # 用模型配置， 与分配到的局部数据 生成局部模型
+        if FederatedClient.DATA_MODE:
+            fake_data, my_class_distr = self.datasource.fake_non_iid_data( # 从数据中心 获取 分配到的数据
+                min_train=model_config['min_train_size'],
+                max_train=FederatedClient.MAX_DATASET_SIZE_KEPT,
+                data_split=model_config['data_split']
+            )
+            self.local_model = LocalModel(model_config, fake_data) # 用模型配置， 与分配到的局部数据 生成局部模型
+        else:
+            fake_data, my_class_distr = self.datasource.fake_iid_data( # 从数据中心 获取 分配到的数据
+                min_train=model_config['min_train_size'],
+                max_train=FederatedClient.MAX_DATASET_SIZE_KEPT,
+                data_split=model_config['data_split']
+            )
+            self.local_model = LocalModel(model_config, fake_data) # 用模型配置， 与分配到的局部数据 生成局部模型
+
         # ready to be dispatched for training
         self.sio.emit('client_ready', { # 向服务端发送 client_ready 事件
                 'train_size': self.local_model.x_train.shape[0],
@@ -135,6 +143,8 @@ class FederatedClient(object):
             #     'weights_format'
             #     'run_validation'
             print("update requested")
+            if FederatedClient.SLEEP_MODE:
+                self.intermittently_sleep(p = 1., low = 10, high = 100) # randowm sleep
 
             if req['weights_format'] == 'pickle': # 解码 获得模型权重
                 weights = pickle_string_to_obj(req['current_weights'])
@@ -215,6 +225,6 @@ class FederatedClient(object):
 
 
 if __name__ == "__main__":
-    server_host = "192.168.0.103"
+    server_host = "127.0.0.1"
     server_port = 5000
     FederatedClient(server_host, server_port, datasource.Mnist)

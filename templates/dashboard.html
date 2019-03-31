@@ -22,6 +22,10 @@
         var valid_ts = [];
         var train_losses = [];
         var valid_losses = [];
+
+        var test_rounds = [];
+        var test_ts = [];
+        var test_losses = [];
         $.each(data["train_loss"], function(i, v) {
             train_rounds.push(v[0]);
             train_ts.push(v[1]);
@@ -32,6 +36,12 @@
             valid_ts.push(v[1]);
             valid_losses.push(v[2]);
         })
+        $.each(data["test_loss"], function(i, v) {
+            test_rounds.push(v[0]);
+            test_ts.push(v[1]);
+            test_losses.push(v[2]);
+        })
+        
         
         var train_loss_trace = {
             x: train_rounds, 
@@ -45,16 +55,23 @@
             type: 'scatter',
             name: 'validation loss'
         };
+        var test_loss_trace = {
+            x: test_rounds, 
+            y: test_losses, 
+            type: 'scatter',
+            name: 'test loss'
+        };      
+
         var layout = {
           title: 'Loss of global model',
           xaxis: {
-            title: 'round',
+            title: 'Total Epoches',
           },
           yaxis: {
             title: 'Loss',
           }
         };
-        Plotly.newPlot('chart_losses_round', [train_loss_trace, valid_loss_trace], layout);
+        Plotly.newPlot('chart_losses_round', [test_loss_trace], layout);
 
         var train_loss_trace_ts = {
             x: train_ts, 
@@ -67,6 +84,12 @@
             y: valid_losses, 
             type: 'scatter',
             name: 'validation loss'
+        };  
+        var test_loss_trace_ts = {
+            x: test_ts, 
+            y: test_losses, 
+            type: 'scatter',
+            name: 'test loss'
         };            
         var layout = {
           title: 'Loss of global model',
@@ -77,7 +100,7 @@
             title: 'Loss',
           }
         };
-        Plotly.newPlot('chart_losses_ts', [train_loss_trace_ts, valid_loss_trace_ts], layout);
+        Plotly.newPlot('chart_losses_ts', [test_loss_trace_ts], layout);
     }
 
     function draw_accuracies(data) {
@@ -87,6 +110,10 @@
         var valid_ts = [];
         var train_accuracies = [];
         var valid_accuracies = [];
+
+        var test_rounds = [];
+        var test_ts = [];
+        var test_accuracies = [];
         $.each(data["train_accuracy"], function(i, v) {
             train_rounds.push(v[0]);
             train_ts.push(v[1]);
@@ -96,6 +123,11 @@
             valid_rounds.push(v[0]);
             valid_ts.push(v[1]);
             valid_accuracies.push(v[2]);
+        })
+        $.each(data["test_accuracy"], function(i, v) {
+            test_rounds.push(v[0]);
+            test_ts.push(v[1]);
+            test_accuracies.push(v[2]);
         })
         
         var train_accuracy_trace = {
@@ -110,16 +142,22 @@
             type: 'scatter',
             name: 'validation accuracy'
         };
+        var test_accuracy_trace = {
+            x: test_rounds, 
+            y: test_accuracies, 
+            type: 'scatter',
+            name: 'test accuracy'
+        };
         var layout = {
           title: 'Accuracy of global model',
           xaxis: {
-            title: 'Round',
+            title: 'Total Epoches',
           },
           yaxis: {
             title: 'Accuracy',
           }
         };
-        Plotly.newPlot('chart_accuracies_round', [train_accuracy_trace, valid_accuracy_trace], layout);
+        Plotly.newPlot('chart_accuracies_round', [test_accuracy_trace], layout);
         var train_accuracy_trace_ts = {
             x: train_ts, 
             y: train_accuracies, 
@@ -132,6 +170,13 @@
             type: 'scatter',
             name: 'validation accuracy'
         };
+        var test_accuracy_trace_ts = {
+            x: test_ts, 
+            y: test_accuracies, 
+            type: 'scatter',
+            name: 'test accuracy'
+        };
+
         var layout = {
           title: 'Accuracy of global model',
           xaxis: {
@@ -141,7 +186,7 @@
             title: 'Accuracy',
           }
         };
-        Plotly.newPlot('chart_accuracies_ts', [train_accuracy_trace_ts, valid_accuracy_trace_ts], layout);
+        Plotly.newPlot('chart_accuracies_ts', [test_accuracy_trace_ts], layout);
     }
 
     var update = setInterval(function(){

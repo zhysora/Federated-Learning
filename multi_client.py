@@ -3,7 +3,7 @@ import datasource
 import multiprocessing
 import threading
 
-server_host = "192.168.0.103"
+server_host = "127.0.0.1"
 server_port = 5000
 
 def start_client():
