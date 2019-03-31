@@ -147,11 +147,11 @@ class FLServer(object):  # 服务端
     ##### Server Config
     SERVER_MODE = False # true 代表非同步， false 代表同步
 
-    MIN_NUM_WORKERS = 5 # 最少工人数
-    NUM_CLIENTS_CONTACTED_PER_ROUND = 5 # 每轮连接的客户端数
+    MIN_NUM_WORKERS = 20 # 最少工人数
+    NUM_CLIENTS_CONTACTED_PER_ROUND = 20 # 每轮连接的客户端数
 
     MAX_NUM_ROUNDS = 10000 # 最大训练轮数
-    MIN_NUM_ROUNDS = 0 # 最小训练轮数
+    MIN_NUM_ROUNDS = 100 # 最小训练轮数
 
     def __init__(self, global_model, host, port, datasource): # 初始化
 
@@ -261,7 +261,8 @@ class FLServer(object):  # 服务端
                     self.global_model.aggregate_test_loss_accuracy(test_loss, test_accuracy, self.current_round)
 
                     if self.global_model.prev_test_loss is not None and \
-                                abs(self.global_model.prev_test_loss - test_loss) / self.global_model.prev_test_loss < .01:
+                                abs(self.global_model.prev_test_loss - test_loss) / self.global_model.prev_test_loss < .01 \
+                                and self.current_round >= FLServer.MIN_NUM_ROUNDS * FLServer.MIN_NUM_WORKERS :
                         self.conv = True
                         print(self.global_model.prev_test_loss, test_loss)
                         print("convergences!!!")
@@ -293,7 +294,8 @@ class FLServer(object):  # 服务端
                         self.global_model.aggregate_test_loss_accuracy(test_loss, test_accuracy, self.current_round * FLServer.NUM_CLIENTS_CONTACTED_PER_ROUND)
 
                         if self.global_model.prev_test_loss is not None and \
-                                    abs(self.global_model.prev_test_loss - test_loss) / self.global_model.prev_test_loss < .01:
+                                    abs(self.global_model.prev_test_loss - test_loss) / self.global_model.prev_test_loss < .01 \
+                                    and self.current_round >= FLServer.MIN_NUM_ROUNDS * FLServer.MIN_NUM_WORKERS :
                             self.conv = True
                             print(self.global_model.prev_test_loss, test_loss)
                             print("convergences!!!")
