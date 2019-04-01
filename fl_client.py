@@ -180,6 +180,9 @@ class FederatedClient(object):
             }
             self.sio.emit('client_eval', resp) # 向服务端 发送事件 client_eval 附带数据(局部测试集上的表现)
 
+        def on_update_ok(*args): 
+            print("sever received update")
+
         # 在这里绑定了 socketIO event与对应的相应函数
         self.sio.on('connect', on_connect)
         self.sio.on('disconnect', on_disconnect)
@@ -187,6 +190,7 @@ class FederatedClient(object):
         self.sio.on('init', lambda *args: self.on_init(*args))
         self.sio.on('request_update', on_request_update)
         self.sio.on('stop_and_eval', on_stop_and_eval)
+        self.sio.on('update_ok', on_update_ok)
 
 
 

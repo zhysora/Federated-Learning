@@ -279,6 +279,7 @@ class FLServer(object):  # 服务端
                     'run_validation': 0, # 每两轮看一下验证集上的表现
                 }, room=request.sid)
             else:
+                emit('update_ok', {}, room=request.sid)
                  # discard outdated update 丢弃 过期的更新
                 if data['round_number'] == self.current_round: # 判断轮数是否和当前轮数一致
                     self.current_round_client_updates += [data] # 数据存起来
@@ -304,6 +305,8 @@ class FLServer(object):  # 服务端
                         self.global_model.prev_test_loss = test_loss
 
                         self.train_next_round()
+                else:
+                    print("discarded!!!!!!!!!!!")
             
         @self.socketio.on('client_eval') # 收到 client_eval
         def handle_client_eval(data): 
