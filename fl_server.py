@@ -147,8 +147,8 @@ class FLServer(object):  # 服务端
     ##### Server Config
     SERVER_MODE = False # true 代表非同步， false 代表同步
 
-    MIN_NUM_WORKERS = 20 # 最少工人数
-    NUM_CLIENTS_CONTACTED_PER_ROUND = 20 # 每轮连接的客户端数
+    MIN_NUM_WORKERS = 10 # 最少工人数
+    NUM_CLIENTS_CONTACTED_PER_ROUND = 10 # 每轮连接的客户端数
 
     MAX_NUM_ROUNDS = 10000 # 最大训练轮数
     MIN_NUM_ROUNDS = 100 # 最小训练轮数
@@ -203,6 +203,8 @@ class FLServer(object):  # 服务端
         @self.socketio.on('reconnect') # 收到 reconnect
         def handle_reconnect(): # 打印 xx reconnected
             print(request.sid, "reconnected")
+            if request.sid not in self.ready_client_sids: 
+                self.ready_client_sids.add(request.sid)
 
         @self.socketio.on('disconnect') # 收到 xx disconnected
         def handle_reconnect(): # 打印 xx disconnected
@@ -286,7 +288,7 @@ class FLServer(object):  # 服务端
                     # 将最新添加进来的那一个 权重解压。 这里客户端传来的'weights'应当是用pickle压缩过的
                     self.current_round_client_updates[-1]['weights'] = pickle_string_to_obj(data['weights']) 
                     
-                    if len(self.current_round_client_updates) == FLServer.NUM_CLIENTS_CONTACTED_PER_ROUND :
+                    if len(self.current_round_client_updates) >= FLServer.NUM_CLIENTS_CONTACTED_PER_ROUND * 0.7:
                         self.global_model.update_weights( # 将数据交给全局模型 去更新
                             [x['weights'] for x in self.current_round_client_updates],
                             [x['train_size'] for x in self.current_round_client_updates], 

@@ -16,7 +16,7 @@ class DataSource(object): # 这好比 一个接口
 class Mnist(DataSource):
 
     IID = False # 是否 独立同分布
-    MAX_NUM_CLASSES_PER_CLIENT = 5 # 每个客户端 持有的 最大（标签）类别数
+    MAX_NUM_CLASSES_PER_CLIENT = 10 # 每个客户端 持有的 最大（标签）类别数
     
     def __init__(self):
         (x_train, y_train), (x_test, y_test) = mnist.load_data() # 获取Mnist数据集
