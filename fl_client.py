@@ -80,9 +80,9 @@ class LocalModel(object): # 局部模型
 class FederatedClient(object):
     ##### Client Config
     DATA_MODE = True # true 代表 Non-IDD, false 代表 IDD
-    SLEEP_MODE = False # true 代表会随机sleep, false 代表不会
+    SLEEP_MODE = True # true 代表会随机sleep, false 代表不会
 
-    MAX_DATASET_SIZE_KEPT = 1200 # 最大数据集上限
+    MAX_DATASET_SIZE_KEPT = 12000 # 最大数据集上限
 
     def __init__(self, server_host, server_port, datasource):
         self.local_model = None

@@ -145,17 +145,17 @@ class GlobalModel_MNIST_CNN(GlobalModel): # 继承至全局模型 实现 MNIST�
 
 class FLServer(object):  # 服务端
     ##### Server Config
-    SERVER_MODE = False # true 代表非同步， false 代表同步
+    SERVER_MODE = True # true 代表非同步， false 代表同步
 
-    MIN_NUM_WORKERS = 10 # 最少工人数
-    NUM_CLIENTS_CONTACTED_PER_ROUND = 10 # 每轮连接的客户端数
+    MIN_NUM_WORKERS = 4 # 最少工人数
+    NUM_CLIENTS_CONTACTED_PER_ROUND = 4 # 每轮连接的客户端数
 
     MAX_NUM_ROUNDS = 10000 # 最大训练轮数
     MIN_NUM_ROUNDS = 100 # 最小训练轮数
 
     def __init__(self, global_model, host, port, datasource): # 初始化
 
-        self.test_data = datasource().get_server_test(test_size = 1200)
+        self.test_data = datasource().get_server_test(test_size = 12000)
         self.x_test = np.array([tup[0] for tup in self.test_data])
         self.y_test = np.array([tup[1] for tup in self.test_data]).reshape((-1, 10))
 
@@ -218,10 +218,10 @@ class FLServer(object):  # 服务端
             emit('init', { # 向客户端回复 发出事件 init 后面接一个字典 代表传输的数据
                     'model_json': self.global_model.model.to_json(), # 全局模型端json形式
                     'model_id': self.model_id, # 模型端 uuid
-                    'min_train_size': 1200, # 最小训练数据量
+                    'min_train_size': 12000, # 最小训练数据量
                     'data_split': (1., 0., 0.), # train, test, valid  数据分割比例
                     'epoch_per_round': 1,  # 每批次论述
-                    'batch_size': 10 # 批训练大小
+                    'batch_size': 32 # 批训练大小
                 })
 
         @self.socketio.on('client_ready') # 收到 client_ready
