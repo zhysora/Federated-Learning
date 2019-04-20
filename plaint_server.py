@@ -18,12 +18,16 @@ from flask_socketio import SocketIO
 from flask_socketio import *
 # https://flask-socketio.readthedocs.io/en/latest/
        
+time_max = 5000 
+
 def prim(arr):
     a = arr[0][0]
     b = arr[0][1]
     for i in range(len(arr)):
         arr[i][0] = arr[i][0] - a
         arr[i][1] = arr[i][1] - b
+        if arr[i][1] > time_max:
+            arr[i] = arr[i - 1]
 
 class GlobalModel(object): # 全局模型
     """docstring for GlobalModel"""
@@ -97,7 +101,7 @@ class GlobalModel(object): # 全局模型
             "test_accuracy_sync_idd_4" : self.test_accuracies_sync_idd_4,
 
             "test_loss_sync_noidd_4" : self.test_losses_sync_noidd_4,
-            "test_accuracy_sync_noidd_4" : self.test_accuracies_sync_noidd_4
+            "test_accuracy_sync_noidd_4" : self.test_accuracies_sync_noidd_4,
 
             "test_loss_async_idd_6" : self.test_losses_async_idd_6,
             "test_accuracy_async_idd_6" : self.test_accuracies_async_idd_6,
