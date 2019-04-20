@@ -1,0 +1,549 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <title>FL</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <div id="chart_losses_round"></div>
+  <div id="chart_losses_ts"></div>
+  <div id="chart_accuracies_round"></div>
+  <div id="chart_accuracies_ts"></div>
+
+  <script>
+    function draw_losses(data) {
+        var test_rounds_async_idd_1 = [];
+        var test_ts_async_idd_1 = [];
+        var test_losses_async_idd_1 = [];
+        $.each(data["test_loss_async_idd_1"], function(i, v) {
+            test_rounds_async_idd_1.push(v[0]);
+            test_ts_async_idd_1.push(v[1]);
+            test_losses_async_idd_1.push(v[2]);
+        })
+        var test_loss_trace_async_idd_1 = {
+            x: test_rounds_async_idd_1, 
+            y: test_losses_async_idd_1, 
+            type: 'scatter',
+            name: 'test loss_async_idd_1'
+        };      
+
+        var test_rounds_async_idd_2 = [];
+        var test_ts_async_idd_2 = [];
+        var test_losses_async_idd_2 = [];
+        $.each(data["test_loss_async_idd_2"], function(i, v) {
+            test_rounds_async_idd_2.push(v[0]);
+            test_ts_async_idd_2.push(v[1]);
+            test_losses_async_idd_2.push(v[2]);
+        })
+        var test_loss_trace_async_idd_2 = {
+            x: test_rounds_async_idd_2, 
+            y: test_losses_async_idd_2, 
+            type: 'scatter',
+            name: 'test loss_async_idd_2'
+        };      
+
+        var test_rounds_sync_idd_2 = [];
+        var test_ts_sync_idd_2 = [];
+        var test_losses_sync_idd_2 = [];
+        $.each(data["test_loss_sync_idd_2"], function(i, v) {
+            test_rounds_sync_idd_2.push(v[0]);
+            test_ts_sync_idd_2.push(v[1]);
+            test_losses_sync_idd_2.push(v[2]);
+        })
+        var test_loss_trace_sync_idd_2 = {
+            x: test_rounds_sync_idd_2, 
+            y: test_losses_sync_idd_2, 
+            type: 'scatter',
+            name: 'test loss_sync_idd_2'
+        };      
+
+        var test_rounds_async_idd_4 = [];
+        var test_ts_async_idd_4 = [];
+        var test_losses_async_idd_4 = [];
+        $.each(data["test_loss_async_idd_4"], function(i, v) {
+            test_rounds_async_idd_4.push(v[0]);
+            test_ts_async_idd_4.push(v[1]);
+            test_losses_async_idd_4.push(v[2]);
+        })
+        var test_loss_trace_async_idd_4 = {
+            x: test_rounds_async_idd_4, 
+            y: test_losses_async_idd_4, 
+            type: 'scatter',
+            name: 'test loss_async_idd_4'
+        };   
+
+        var test_rounds_async_noidd_4 = [];
+        var test_ts_async_noidd_4 = [];
+        var test_losses_async_noidd_4 = [];
+        $.each(data["test_loss_async_noidd_4"], function(i, v) {
+            test_rounds_async_noidd_4.push(v[0]);
+            test_ts_async_noidd_4.push(v[1]);
+            test_losses_async_noidd_4.push(v[2]);
+        })
+        var test_loss_trace_async_noidd_4 = {
+            x: test_rounds_async_noidd_4, 
+            y: test_losses_async_noidd_4, 
+            type: 'scatter',
+            name: 'test loss_async_noidd_4'
+        };  
+
+        var test_rounds_sync_idd_4 = [];
+        var test_ts_sync_idd_4 = [];
+        var test_losses_sync_idd_4 = [];
+        $.each(data["test_loss_sync_idd_4"], function(i, v) {
+            test_rounds_sync_idd_4.push(v[0]);
+            test_ts_sync_idd_4.push(v[1]);
+            test_losses_sync_idd_4.push(v[2]);
+        })
+        var test_loss_trace_sync_idd_4 = {
+            x: test_rounds_sync_idd_4, 
+            y: test_losses_sync_idd_4, 
+            type: 'scatter',
+            name: 'test loss_sync_idd_4'
+        };  
+
+        var test_rounds_sync_noidd_4 = [];
+        var test_ts_sync_noidd_4 = [];
+        var test_losses_sync_noidd_4 = [];
+        $.each(data["test_loss_sync_noidd_4"], function(i, v) {
+            test_rounds_sync_noidd_4.push(v[0]);
+            test_ts_sync_noidd_4.push(v[1]);
+            test_losses_sync_noidd_4.push(v[2]);
+        })
+        var test_loss_trace_sync_noidd_4 = {
+            x: test_rounds_sync_noidd_4, 
+            y: test_losses_sync_noidd_4, 
+            type: 'scatter',
+            name: 'test loss_sync_noidd_4'
+        };     
+
+        var test_rounds_async_idd_6 = [];
+        var test_ts_async_idd_6 = [];
+        var test_losses_async_idd_6 = [];
+        $.each(data["test_loss_async_idd_6"], function(i, v) {
+            test_rounds_async_idd_6.push(v[0]);
+            test_ts_async_idd_6.push(v[1]);
+            test_losses_async_idd_6.push(v[2]);
+        })
+        var test_loss_trace_async_idd_6 = {
+            x: test_rounds_async_idd_6, 
+            y: test_losses_async_idd_6, 
+            type: 'scatter',
+            name: 'test loss_async_idd_6'
+        };   
+
+        var test_rounds_async_noidd_6 = [];
+        var test_ts_async_noidd_6 = [];
+        var test_losses_async_noidd_6 = [];
+        $.each(data["test_loss_async_noidd_6"], function(i, v) {
+            test_rounds_async_noidd_6.push(v[0]);
+            test_ts_async_noidd_6.push(v[1]);
+            test_losses_async_noidd_6.push(v[2]);
+        })
+        var test_loss_trace_async_noidd_6 = {
+            x: test_rounds_async_noidd_6, 
+            y: test_losses_async_noidd_6, 
+            type: 'scatter',
+            name: 'test loss_async_noidd_6'
+        };  
+
+        var test_rounds_sync_idd_6 = [];
+        var test_ts_sync_idd_6 = [];
+        var test_losses_sync_idd_6 = [];
+        $.each(data["test_loss_sync_idd_6"], function(i, v) {
+            test_rounds_sync_idd_6.push(v[0]);
+            test_ts_sync_idd_6.push(v[1]);
+            test_losses_sync_idd_6.push(v[2]);
+        })
+        var test_loss_trace_sync_idd_6 = {
+            x: test_rounds_sync_idd_6, 
+            y: test_losses_sync_idd_6, 
+            type: 'scatter',
+            name: 'test loss_sync_idd_6'
+        };  
+
+        var test_rounds_sync_noidd_6 = [];
+        var test_ts_sync_noidd_6 = [];
+        var test_losses_sync_noidd_6 = [];
+        $.each(data["test_loss_sync_noidd_6"], function(i, v) {
+            test_rounds_sync_noidd_6.push(v[0]);
+            test_ts_sync_noidd_6.push(v[1]);
+            test_losses_sync_noidd_6.push(v[2]);
+        })
+        var test_loss_trace_sync_noidd_6 = {
+            x: test_rounds_sync_noidd_6, 
+            y: test_losses_sync_noidd_6, 
+            type: 'scatter',
+            name: 'test loss_sync_noidd_6'
+        };     
+
+  
+        var layout = {
+          title: 'Loss of global model',
+          xaxis: {
+            title: 'Total Epoches',
+          },
+          yaxis: {
+            title: 'Loss',
+          }
+        };
+        Plotly.newPlot('chart_losses_round', [test_loss_trace_async_idd_1,test_loss_trace_async_idd_2,test_loss_trace_sync_idd_2,test_loss_trace_async_idd_4,test_loss_trace_async_noidd_4,test_loss_trace_sync_idd_4,test_loss_trace_sync_noidd_4,test_loss_trace_async_idd_6,test_loss_trace_async_noidd_6,test_loss_trace_sync_idd_6,test_loss_trace_sync_noidd_6], layout);
+
+        var test_loss_trace_ts_async_idd_1 = {
+            x: test_ts_async_idd_1, 
+            y: test_losses_async_idd_1, 
+            type: 'scatter',
+            name: 'test loss_async_idd_1'
+        };       
+        var test_loss_trace_ts_async_idd_2 = {
+            x: test_ts_async_idd_2, 
+            y: test_losses_async_idd_2, 
+            type: 'scatter',
+            name: 'test loss_async_idd_2'
+        };  
+        var test_loss_trace_ts_sync_idd_2 = {
+            x: test_ts_sync_idd_2, 
+            y: test_losses_sync_idd_2, 
+            type: 'scatter',
+            name: 'test loss_sync_idd_2'
+        };  
+        var test_loss_trace_ts_async_idd_4 = {
+            x: test_ts_async_idd_4, 
+            y: test_losses_async_idd_4, 
+            type: 'scatter',
+            name: 'test loss_async_idd_4'
+        };  
+        var test_loss_trace_ts_async_noidd_4 = {
+            x: test_ts_async_noidd_4, 
+            y: test_losses_async_noidd_4, 
+            type: 'scatter',
+            name: 'test loss_async_noidd_4'
+        };  
+        var test_loss_trace_ts_sync_idd_4 = {
+            x: test_ts_sync_idd_4, 
+            y: test_losses_sync_idd_4, 
+            type: 'scatter',
+            name: 'test loss_sync_idd_4'
+        };  
+        var test_loss_trace_ts_sync_noidd_4 = {
+            x: test_ts_sync_noidd_4, 
+            y: test_losses_sync_noidd_4, 
+            type: 'scatter',
+            name: 'test loss_sync_noidd_4'
+        };  
+        var test_loss_trace_ts_async_idd_6 = {
+            x: test_ts_async_idd_6, 
+            y: test_losses_async_idd_6, 
+            type: 'scatter',
+            name: 'test loss_async_idd_6'
+        };  
+        var test_loss_trace_ts_async_noidd_6 = {
+            x: test_ts_async_noidd_6, 
+            y: test_losses_async_noidd_6, 
+            type: 'scatter',
+            name: 'test loss_async_noidd_6'
+        };  
+        var test_loss_trace_ts_sync_idd_6 = {
+            x: test_ts_sync_idd_6, 
+            y: test_losses_sync_idd_6, 
+            type: 'scatter',
+            name: 'test loss_sync_idd_6'
+        };  
+        var test_loss_trace_ts_sync_noidd_6 = {
+            x: test_ts_sync_noidd_6, 
+            y: test_losses_sync_noidd_6, 
+            type: 'scatter',
+            name: 'test loss_sync_noidd_6'
+        };  
+
+        var layout = {
+          title: 'Loss of global model',
+          xaxis: {
+            title: 'Time(s)',
+          },
+          yaxis: {
+            title: 'Loss',
+          }
+        };
+        Plotly.newPlot('chart_losses_ts', [test_loss_trace_ts_async_idd_1,test_loss_trace_ts_async_idd_2,test_loss_trace_ts_sync_idd_2,test_loss_trace_ts_async_idd_4,test_loss_trace_ts_async_noidd_4,test_loss_trace_ts_sync_idd_4,test_loss_trace_ts_sync_noidd_4,test_loss_trace_ts_async_idd_6,test_loss_trace_ts_async_noidd_6,test_loss_trace_ts_sync_idd_6,test_loss_trace_ts_sync_noidd_6], layout);
+    }
+
+    function draw_accuracies(data) {
+        var test_rounds_async_idd_1 = [];
+        var test_ts_async_idd_1 = [];
+        var test_accuracies_async_idd_1 = [];
+        $.each(data["test_accuracy_async_idd_1"], function(i, v) {
+            test_rounds_async_idd_1.push(v[0]);
+            test_ts_async_idd_1.push(v[1]);
+            test_accuracies_async_idd_1.push(v[2]);
+        })
+        var test_accuracy_trace_async_idd_1 = {
+            x: test_rounds_async_idd_1, 
+            y: test_accuracies_async_idd_1, 
+            type: 'scatter',
+            name: 'test accuracy_async_idd_1'
+        };
+
+        var test_rounds_async_idd_2 = [];
+        var test_ts_async_idd_2 = [];
+        var test_accuracies_async_idd_2 = [];
+        $.each(data["test_accuracy_async_idd_2"], function(i, v) {
+            test_rounds_async_idd_2.push(v[0]);
+            test_ts_async_idd_2.push(v[1]);
+            test_accuracies_async_idd_2.push(v[2]);
+        })
+        var test_accuracy_trace_async_idd_2 = {
+            x: test_rounds_async_idd_2, 
+            y: test_accuracies_async_idd_2, 
+            type: 'scatter',
+            name: 'test accuracy_async_idd_2'
+        };
+
+        var test_rounds_sync_idd_2 = [];
+        var test_ts_sync_idd_2 = [];
+        var test_accuracies_sync_idd_2 = [];
+        $.each(data["test_accuracy_sync_idd_2"], function(i, v) {
+            test_rounds_sync_idd_2.push(v[0]);
+            test_ts_sync_idd_2.push(v[1]);
+            test_accuracies_sync_idd_2.push(v[2]);
+        })
+        var test_accuracy_trace_sync_idd_2 = {
+            x: test_rounds_sync_idd_2, 
+            y: test_accuracies_sync_idd_2, 
+            type: 'scatter',
+            name: 'test accuracy_sync_idd_2'
+        };
+
+        var test_rounds_async_idd_4 = [];
+        var test_ts_async_idd_4 = [];
+        var test_accuracies_async_idd_4 = [];
+        $.each(data["test_accuracy_async_idd_4"], function(i, v) {
+            test_rounds_async_idd_4.push(v[0]);
+            test_ts_async_idd_4.push(v[1]);
+            test_accuracies_async_idd_4.push(v[2]);
+        })
+        var test_accuracy_trace_async_idd_4 = {
+            x: test_rounds_async_idd_4, 
+            y: test_accuracies_async_idd_4, 
+            type: 'scatter',
+            name: 'test accuracy_async_idd_4'
+        };
+
+        var test_rounds_async_noidd_4 = [];
+        var test_ts_async_noidd_4 = [];
+        var test_accuracies_async_noidd_4 = [];
+        $.each(data["test_accuracy_async_noidd_4"], function(i, v) {
+            test_rounds_async_noidd_4.push(v[0]);
+            test_ts_async_noidd_4.push(v[1]);
+            test_accuracies_async_noidd_4.push(v[2]);
+        })
+        var test_accuracy_trace_async_noidd_4 = {
+            x: test_rounds_async_noidd_4, 
+            y: test_accuracies_async_noidd_4, 
+            type: 'scatter',
+            name: 'test accuracy_async_noidd_4'
+        };
+
+        var test_rounds_sync_idd_4 = [];
+        var test_ts_sync_idd_4 = [];
+        var test_accuracies_sync_idd_4 = [];
+        $.each(data["test_accuracy_sync_idd_4"], function(i, v) {
+            test_rounds_sync_idd_4.push(v[0]);
+            test_ts_sync_idd_4.push(v[1]);
+            test_accuracies_sync_idd_4.push(v[2]);
+        })
+        var test_accuracy_trace_sync_idd_4 = {
+            x: test_rounds_sync_idd_4, 
+            y: test_accuracies_sync_idd_4, 
+            type: 'scatter',
+            name: 'test accuracy_sync_idd_4'
+        };
+
+        var test_rounds_sync_noidd_4 = [];
+        var test_ts_sync_noidd_4 = [];
+        var test_accuracies_sync_noidd_4 = [];
+        $.each(data["test_accuracy_sync_noidd_4"], function(i, v) {
+            test_rounds_sync_noidd_4.push(v[0]);
+            test_ts_sync_noidd_4.push(v[1]);
+            test_accuracies_sync_noidd_4.push(v[2]);
+        })
+        var test_accuracy_trace_sync_noidd_4 = {
+            x: test_rounds_sync_noidd_4, 
+            y: test_accuracies_sync_noidd_4, 
+            type: 'scatter',
+            name: 'test accuracy_sync_noidd_4'
+        };
+
+        var test_rounds_async_idd_6 = [];
+        var test_ts_async_idd_6 = [];
+        var test_accuracies_async_idd_6 = [];
+        $.each(data["test_accuracy_async_idd_6"], function(i, v) {
+            test_rounds_async_idd_6.push(v[0]);
+            test_ts_async_idd_6.push(v[1]);
+            test_accuracies_async_idd_6.push(v[2]);
+        })
+        var test_accuracy_trace_async_idd_6 = {
+            x: test_rounds_async_idd_6, 
+            y: test_accuracies_async_idd_6, 
+            type: 'scatter',
+            name: 'test accuracy_async_idd_6'
+        };
+
+        var test_rounds_async_noidd_6 = [];
+        var test_ts_async_noidd_6 = [];
+        var test_accuracies_async_noidd_6 = [];
+        $.each(data["test_accuracy_async_noidd_6"], function(i, v) {
+            test_rounds_async_noidd_6.push(v[0]);
+            test_ts_async_noidd_6.push(v[1]);
+            test_accuracies_async_noidd_6.push(v[2]);
+        })
+        var test_accuracy_trace_async_noidd_6 = {
+            x: test_rounds_async_noidd_6, 
+            y: test_accuracies_async_noidd_6, 
+            type: 'scatter',
+            name: 'test accuracy_async_noidd_6'
+        };
+
+        var test_rounds_sync_idd_6 = [];
+        var test_ts_sync_idd_6 = [];
+        var test_accuracies_sync_idd_6 = [];
+        $.each(data["test_accuracy_sync_idd_6"], function(i, v) {
+            test_rounds_sync_idd_6.push(v[0]);
+            test_ts_sync_idd_6.push(v[1]);
+            test_accuracies_sync_idd_6.push(v[2]);
+        })
+        var test_accuracy_trace_sync_idd_6 = {
+            x: test_rounds_sync_idd_6, 
+            y: test_accuracies_sync_idd_6, 
+            type: 'scatter',
+            name: 'test accuracy_sync_idd_6'
+        };
+
+        var test_rounds_sync_noidd_6 = [];
+        var test_ts_sync_noidd_6 = [];
+        var test_accuracies_sync_noidd_6 = [];
+        $.each(data["test_accuracy_sync_noidd_6"], function(i, v) {
+            test_rounds_sync_noidd_6.push(v[0]);
+            test_ts_sync_noidd_6.push(v[1]);
+            test_accuracies_sync_noidd_6.push(v[2]);
+        })
+        var test_accuracy_trace_sync_noidd_6 = {
+            x: test_rounds_sync_noidd_6, 
+            y: test_accuracies_sync_noidd_6, 
+            type: 'scatter',
+            name: 'test accuracy_sync_noidd_6'
+        };
+
+        var layout = {
+          title: 'Accuracy of global model',
+          xaxis: {
+            title: 'Total Epoches',
+          },
+          yaxis: {
+            title: 'Accuracy',
+          }
+        };
+
+        Plotly.newPlot('chart_accuracies_round', [test_accuracy_trace_async_idd_1,test_accuracy_trace_async_idd_2,test_accuracy_trace_sync_idd_2,test_accuracy_trace_async_idd_4,test_accuracy_trace_async_noidd_4,test_accuracy_trace_sync_idd_4,test_accuracy_trace_sync_noidd_4,test_accuracy_trace_async_idd_6,test_accuracy_trace_async_noidd_6,test_accuracy_trace_sync_idd_6,test_accuracy_trace_sync_noidd_6], layout);
+        
+        var test_accuracy_trace_ts_async_idd_1 = {
+            x: test_ts_async_idd_1, 
+            y: test_accuracies_async_idd_1, 
+            type: 'scatter',
+            name: 'test accuracy_async_idd_1'
+        };
+        var test_accuracy_trace_ts_async_idd_2 = {
+            x: test_ts_async_idd_2, 
+            y: test_accuracies_async_idd_2, 
+            type: 'scatter',
+            name: 'test accuracy_async_idd_2'
+        };
+        var test_accuracy_trace_ts_sync_idd_2 = {
+            x: test_ts_sync_idd_2, 
+            y: test_accuracies_sync_idd_2, 
+            type: 'scatter',
+            name: 'test accuracy_sync_idd_2'
+        };
+        var test_accuracy_trace_ts_async_idd_4 = {
+            x: test_ts_async_idd_4, 
+            y: test_accuracies_async_idd_4, 
+            type: 'scatter',
+            name: 'test accuracy_async_idd_4'
+        };
+        var test_accuracy_trace_ts_async_noidd_4 = {
+            x: test_ts_async_noidd_4, 
+            y: test_accuracies_async_noidd_4, 
+            type: 'scatter',
+            name: 'test accuracy_async_noidd_4'
+        };
+        var test_accuracy_trace_ts_sync_idd_4 = {
+            x: test_ts_sync_idd_4, 
+            y: test_accuracies_sync_idd_4, 
+            type: 'scatter',
+            name: 'test accuracy_sync_idd_4'
+        };
+        var test_accuracy_trace_ts_sync_noidd_4 = {
+            x: test_ts_sync_noidd_4, 
+            y: test_accuracies_sync_noidd_4, 
+            type: 'scatter',
+            name: 'test accuracy_sync_noidd_4'
+        };
+        var test_accuracy_trace_ts_async_idd_6 = {
+            x: test_ts_async_idd_6, 
+            y: test_accuracies_async_idd_6, 
+            type: 'scatter',
+            name: 'test accuracy_async_idd_6'
+        };
+        var test_accuracy_trace_ts_async_noidd_6 = {
+            x: test_ts_async_noidd_6, 
+            y: test_accuracies_async_noidd_6, 
+            type: 'scatter',
+            name: 'test accuracy_async_noidd_6'
+        };
+        var test_accuracy_trace_ts_sync_idd_6 = {
+            x: test_ts_sync_idd_6, 
+            y: test_accuracies_sync_idd_6, 
+            type: 'scatter',
+            name: 'test accuracy_sync_idd_6'
+        };
+        var test_accuracy_trace_ts_sync_noidd_6 = {
+            x: test_ts_sync_noidd_6, 
+            y: test_accuracies_sync_noidd_6, 
+            type: 'scatter',
+            name: 'test accuracy_sync_noidd_6'
+        };
+
+        var layout = {
+          title: 'Accuracy of global model',
+          xaxis: {
+            title: 'Time(s)',
+          },
+          yaxis: {
+            title: 'Accuracy',
+          }
+        };
+        Plotly.newPlot('chart_accuracies_ts', [test_accuracy_trace_ts_async_idd_1,test_accuracy_trace_ts_async_idd_2,test_accuracy_trace_ts_sync_idd_2,test_accuracy_trace_ts_async_idd_4,test_accuracy_trace_ts_async_noidd_4,test_accuracy_trace_ts_sync_idd_4,test_accuracy_trace_ts_sync_noidd_4,test_accuracy_trace_ts_async_idd_6,test_accuracy_trace_ts_async_noidd_6,test_accuracy_trace_ts_sync_idd_6,test_accuracy_trace_ts_sync_noidd_6], layout);
+    }
+
+    var update = setInterval(function(){
+        $.get("/stats", function(data) {
+            data = JSON.parse(data);
+            draw_losses(data);
+            draw_accuracies(data);        
+        });
+    }, 5000); // 5s
+
+    function load_data(data) {
+        clearInterval(update);
+        draw_losses(data);
+        draw_accuracies(data);        
+    }
+
+  </script>
+
+</body>
+</html>

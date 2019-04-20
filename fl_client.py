@@ -104,7 +104,7 @@ class FederatedClient(object):
         if FederatedClient.DATA_MODE:
             fake_data, my_class_distr = self.datasource.fake_non_iid_data( # 从数据中心 获取 分配到的数据
                 min_train=model_config['min_train_size'],
-                max_train=FederatedClient.MAX_DATASET_SIZE_KEPT,
+                max_train=model_config['min_train_size'],
                 data_split=model_config['data_split']
             )
             self.local_model = LocalModel(model_config, fake_data) # 用模型配置， 与分配到的局部数据 生成局部模型
