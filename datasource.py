@@ -41,11 +41,11 @@ class Mnist(DataSource):
     def gen_dummy_non_iid_weights(self): # 生成非 独立同分布 的权重
         self.classes = np.array(range(10)) # 0～9的数组
         print(self.classes)
-        num_classes_this_client = 4 #random.randint(1, Mnist.MAX_NUM_CLASSES_PER_CLIENT + 1) # 随机生成 该client的持有 类别总数
+        num_classes_this_client = 8 #random.randint(1, Mnist.MAX_NUM_CLASSES_PER_CLIENT + 1) # 随机生成 该client的持有 类别总数
         print(num_classes_this_client)
         classes_this_client = random.sample(self.classes.tolist(), num_classes_this_client) # 随机选出 对应的类别
         print(classes_this_client)
-        w = np.array([.4, .3, .2, .1]) # 随机生成 每个类别 所占的权重
+        w = np.array([.3, .1, .1, .1, .1, .1, .1, .1]) # 随机生成 每个类别 所占的权重
         print(w)
         weights = np.array([0.] * self.classes.shape[0]) # 10 个 0. 
         for i in range(len(classes_this_client)):
@@ -96,7 +96,7 @@ class Mnist(DataSource):
         # my_class_distr /= np.sum(my_class_distr)
         my_class_distr = self.gen_dummy_non_iid_weights()
 
-        train_size = random.randint(min_train, max_train)
+        train_size = min_train
         test_size = int(train_size / data_split[0] * data_split[1])
         valid_size = int(train_size / data_split[0] * data_split[2])
 
@@ -106,7 +106,6 @@ class Mnist(DataSource):
         print("done generating client data")
 
         return ((train_set, test_set, valid_set), my_class_distr)
-
     def fake_iid_data(self, min_train=100, max_train=1000, data_split=(.6,.3,.1)):        
         # my_class_distr = np.array([np.random.random() for _ in range(self.classes.shape[0])])
         # my_class_distr /= np.sum(my_class_distr)

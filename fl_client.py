@@ -229,6 +229,6 @@ class FederatedClient(object):
 
 
 if __name__ == "__main__":
-    server_host = "127.0.0.1"
+    server_host = "192.168.226.60"
     server_port = 5000
     FederatedClient(server_host, server_port, datasource.Mnist)
